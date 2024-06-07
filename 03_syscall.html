@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Well Access Simulation</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Split screen into two columns */
+      height: 100vh; /* Set full page height */
+      background-color: #f44336;
+    }
+
+    .container {
+      padding: 10px;
+      border-radius: 25px;
+      overflow-x: auto; /* Enable horizontal scrolling for long code */
+    }
+
+    .code-container {
+      background-color: #f0f0f0;
+    }
+
+    .code-container pre {
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px;
+      margin: 0;
+      background-color: #f5f5f5;
+      border-radius: 5px;
+    }
+
+    .output-container {
+      background-color: #e0e0e0;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* Align output at the bottom */
+    }
+
+    .output {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .run-button {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .reset-button {
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container code-container">
+    <pre>
+      <code>
+        #include stdio.h>
+        #include stdlib.h>
+        #include unistd.h>
+        #include fcntl.h>
+        
+        #define BUF_SIZE 4096
+        int main() {
+            int pipefd[2];
+            pid_t pid;
+            char buffer[BUF_SIZE];
+            ssize_t bytes_read;
+        
+            // Create a pipe
+            if (pipe(pipefd) == -1) {
+                perror("pipe");
+                exit(EXIT_FAILURE);
+            }
+        
+            // Fork a child process
+            pid = fork();
+        
+            if (pid == -1) {
+                perror("fork");
+                exit(EXIT_FAILURE);
+            }
+        
+            if (pid == 0) { // Child process
+                // Close the write end of the pipe
+                close(pipefd[0]);
+        
+                // Open input file
+                int input_fd = open("input.txt", O_RDONLY);
+                if (input_fd == -1) {
+                    perror("open");
+                    exit(EXIT_FAILURE);
+                }
+        
+                // Read from input file and write to the pipe
+                while ((bytes_read = read(input_fd, buffer, BUF_SIZE)) > 0) {
+                    if (write(pipefd[1], buffer, bytes_read) != bytes_read) {
+                        perror("write");
+                        exit(EXIT_FAILURE);
+                    }
+                }
+        
+                // Close the read end of the pipe
+                close(pipefd[1]);
+                exit(EXIT_SUCCESS);
+            } else { // Parent process
+                // Close the read end of the pipe
+                close(pipefd[1]);
+        
+                // Open output file
+                int output_fd = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+                if (output_fd == -1) {
+                    perror("open");
+                    exit(EXIT_FAILURE);
+                }
+        
+                // Read from the pipe and write to stdout and output file
+                while ((bytes_read = read(pipefd[0], buffer, BUF_SIZE)) > 0) {
+                    if (write(STDOUT_FILENO, buffer, bytes_read) != bytes_read) {
+                        perror("write to stdout");
+                        exit(EXIT_FAILURE);
+                    }
+                    if (write(output_fd, buffer, bytes_read) != bytes_read) {
+                        perror("write to output file");
+                        exit(EXIT_FAILURE);
+                    }
+                }
+        
+                // Close the write end of the pipe
+                close(pipefd[0]);
+                exit(EXIT_SUCCESS);
+            }
+        
+            return 0;
+        }
+      </code>
+    </pre>
+  </div>
+
+  <div class="container output-container">
+    <div id="output"></div>  <button class="run-button" id="run-button">Run Simulation</button>
+    <button class="reset-button" id="reset-button" disabled>Reset</button>
+  </div>
+
+  <script>
+    // Replace this with your actual server-side script logic (e.g., AJAX call)
+    function runSimulation() {
+      // Simulate fetching output from server-side script
+      const output = "tee() code <br> \
+input file name (input.txt): <br> \
+os operating system is subject <br> \
+output file name (output.txt): <br> \
+os operating system is subject";
+
+      // Update the output container
+      document.getElementById("output").innerHTML = output;
+
+      // Enable reset button after running
+      document.getElementById("reset-button").disabled = false;
+    }
+
+    document.getElementById("run-button").addEventListener("click", runSimulation);
+
+    // Reset functionality (optional)
+    document.getElementById("reset-button").addEventListener("click", function() {
+      document.getElementById("output").innerHTML = "";
+      // Additional reset logic (e.g., clear server-side state)
+    });
+  </script>
+</body>
+</html>

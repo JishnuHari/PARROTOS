@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parrot OS Features</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align items at the top */
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #1b1c1e; /* Dark background */
+            color: #66ff99; /* Light green text color */
+        }
+
+        
+
+        h1 {
+            margin-top: 20px;
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+    
+        <h1>Commands</h1>
+        <h3>Parrot OS includes unique tools and commands that cater specifically to security, privacy, and development needs. Here are some distinctive commands and tools you can use in Parrot OS:</h3>
+
+<h4>1. <strong>AnonSurf</strong></h4>
+<p>- <code>anonsurf start</code>: Activates AnonSurf, routing all traffic through the Tor network for anonymized internet browsing.</p>
+<p>- <code>anonsurf stop</code>: Stops AnonSurf and restores normal network settings.</p>
+<p>- <code>anonsurf status</code>: Checks the current status of AnonSurf.</p>
+
+<h4>2. <strong>Parrot Tools</strong></h4>
+<p>Parrot OS comes with a suite of custom tools grouped under the <code>parrot-tools</code> meta-package. You can manage these tools with specific commands:</p>
+<p>- <code>sudo apt-get install parrot-tools-full</code>: Installs the full suite of Parrot OS security tools.</p>
+<p>- <code>sudo apt-get install parrot-tools-cloud</code>: Installs tools specifically for cloud penetration testing.</p>
+<p>- <code>sudo apt-get install parrot-tools-forensics</code>: Installs tools for digital forensics analysis.</p>
+
+<h4>3. <strong>Parrot Update</strong></h4>
+<p>- <code>sudo parrot-upgrade</code>: A custom command that updates the system and all installed packages, combining <code>apt-get update</code> and <code>apt-get dist-upgrade</code> for convenience.</p>
+
+<h4>4. <strong>Firejail</strong></h4>
+<p>Firejail is a security sandboxing tool included in Parrot OS:</p>
+<p>- <code>firejail firefox</code>: Runs Firefox within a sandbox, isolating it from the rest of the system for enhanced security.</p>
+<p>- <code>firejail --list</code>: Lists all running sandboxed applications.</p>
+<p>- <code>firejail --tree</code>: Displays a tree of sandboxed processes.</p>
+
+<h4>5. <strong>Tor Tools</strong></h4>
+<p>- <code>torbrowser-launcher</code>: Launches the Tor Browser, providing secure and anonymous web browsing.</p>
+<p>- <code>tor-control-panel</code>: Opens the Tor control panel for managing Tor connections and settings.</p>
+
+<h4>6. <strong>Forensic Mode</strong></h4>
+<p>To enable forensic mode (assuming a live boot), you need to boot with the specific option:</p>
+<p>- Boot with <code>forensic</code> kernel parameter: This ensures the system does not mount any disks automatically, preserving the state of the evidence.</p>
+
+<h4>7. <strong>Custom Scripts and Utilities</strong></h4>
+<p>Parrot OS includes several custom scripts for security and privacy operations:</p>
+<p>- <code>sudo parrot-secure</code>: A script to enhance system security settings.</p>
+<p>- <code>sudo parrot-privacy</code>: A script to adjust privacy settings across the OS.</p>
+
+<h4>8. <strong>WiFi Penetration Tools</strong></h4>
+<p>- <code>airmon-ng</code>: Enables monitor mode on wireless interfaces.</p>
+<p>- <code>airodump-ng</code>: Captures raw 802.11 frames, useful for analyzing WiFi networks.</p>
+<p>- <code>aircrack-ng</code>: Cracks WEP and WPA-PSK keys.</p>
+
+<h4>9. <strong>Development Tools</strong></h4>
+<p>- <code>geany</code>: Launches the Geany IDE, a lightweight and fast code editor.</p>
+<p>- <code>vscodium</code>: Launches VSCodium, a community-driven, open-source build of Microsoft’s VS Code.</p>
+
+<h4>10. <strong>System Monitoring and Management</strong></h4>
+<p>- <code>htop</code>: An interactive process viewer to monitor system resources and manage processes.</p>
+<p>- <code>ufw</code>: Commands to manage the Uncomplicated Firewall, enhancing system security.</p>
+
+<p>These commands and tools highlight the specialized capabilities of Parrot OS, making it a powerful platform for security professionals, developers, and privacy-conscious users.</p>
+    </div>
+</body>
+</html>

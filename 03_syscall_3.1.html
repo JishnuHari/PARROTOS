@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Well Access Simulation</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Split screen into two columns */
+      height: 100vh; /* Set full page height */
+      background-color: #f44336;
+    }
+
+    .container {
+      padding: 10px;
+      border-radius: 25px;
+      overflow-x: auto; /* Enable horizontal scrolling for long code */
+    }
+
+    .code-container {
+      background-color: #f0f0f0;
+    }
+
+    .code-container pre {
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px;
+      margin: 0;
+      background-color: #f5f5f5;
+      border-radius: 5px;
+    }
+
+    .output-container {
+      background-color: #e0e0e0;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* Align output at the bottom */
+    }
+
+    .output {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .run-button {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .reset-button {
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container code-container">
+    <pre>
+      <code>
+        #include stdio.h>
+        #include sys/stat.h>
+        #include unistd.h>
+        #include errno.h>
+        #include string.h>
+        
+        int main(int argc, char *argv[]) {
+            if (argc != 2) {
+                printf("Usage: %s <file_path>\n", argv[0]);
+                return 1;
+            }
+        
+            const char *file_path = argv[1];
+            struct stat file_stat;
+        
+            if (stat(file_path, &file_stat) == -1) {
+                fprintf(stderr, "Error: %s\n", strerror(errno));
+                return 1;
+            }
+        
+            printf("File Information:\n");
+            printf("File Path: %s\n", file_path);
+            printf("File Size: %ld bytes\n", file_stat.st_size);
+            printf("File Permissions: ");
+            printf((S_ISDIR(file_stat.st_mode)) ? "d" : "-");
+            printf((file_stat.st_mode & S_IRUSR) ? "r" : "-");
+            printf((file_stat.st_mode & S_IWUSR) ? "w" : "-");
+            printf((file_stat.st_mode & S_IXUSR) ? "x" : "-");
+            printf((file_stat.st_mode & S_IRGRP) ? "r" : "-");
+            printf((file_stat.st_mode & S_IWGRP) ? "w" : "-");
+            printf((file_stat.st_mode & S_IXGRP) ? "x" : "-");
+            printf((file_stat.st_mode & S_IROTH) ? "r" : "-");
+            printf((file_stat.st_mode & S_IWOTH) ? "w" : "-");
+            printf((file_stat.st_mode & S_IXOTH) ? "x" : "-");
+            printf("\n");
+        
+            return 0;
+        }
+      </code>
+    </pre>
+  </div>
+
+  <div class="container output-container">
+    <div id="output"></div>  <button class="run-button" id="run-button">Run Simulation</button>
+    <button class="reset-button" id="reset-button" disabled>Reset</button>
+  </div>
+
+  <script>
+    // Replace this with your actual server-side script logic (e.g., AJAX call)
+    function runSimulation() {
+      // Simulate fetching output from server-side script
+      const output = "...........";
+
+      // Update the output container
+      document.getElementById("output").innerHTML = output;
+
+      // Enable reset button after running
+      document.getElementById("reset-button").disabled = false;
+    }
+
+    document.getElementById("run-button").addEventListener("click", runSimulation);
+
+    // Reset functionality (optional)
+    document.getElementById("reset-button").addEventListener("click", function() {
+      document.getElementById("output").innerHTML = "";
+      // Additional reset logic (e.g., clear server-side state)
+    });
+  </script>
+</body>
+</html>

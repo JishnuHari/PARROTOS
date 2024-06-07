@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parrot OS Features</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #1b1c1e; /* Dark background */
+            color: #66ff99; /* Light green text color */
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .button {
+            background-color: #00cc66; /* Initial background color */
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 25px;
+            box-shadow: 0 8px 15px rgba(0, 204, 102, 0.1);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .button:hover {
+            background-color: #00994d; /* Background color on hover */
+            box-shadow: 0 12px 20px rgba(0, 153, 77, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Parrot Operating System</h1>
+        <button class="button" onclick="location.href='02_featuresparrot.html'">Features</button>
+        <button class="button" onclick="location.href='01_commandparrot.html'">Command</button>
+        <button class="button" onclick="location.href='03_syscall.html'">System Call</button>
+        <button class="button" onclick="location.href='03_syscall_3.1.html'">System Call.1</button>
+        <button class="button" onclick="location.href='03_syscall_3.2.html'">System Call.2</button>
+        <button class="button" onclick="location.href='03_syscall_3.3.html'">System Call.3</button>
+        <button class="button" onclick="location.href='03_syscall_3.4.html'">System Call.4</button>
+
+        <button class="button" onclick="location.href='04_synchro.html'">Synchronization</button>
+        <button class="button" onclick="location.href='05_Priority_Scheduling.html'">Scheduling</button>
+        <button class="button" onclick="location.href='06_Memory_Allocation.html'">Memory Allocation</button>
+    </div>
+</body>
+</html>

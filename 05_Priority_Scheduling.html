@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Well Access Simulation</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Split screen into two columns */
+      height: 100vh; /* Set full page height */
+      background-color: #f44336;
+    }
+
+    .container {
+      padding: 10px;
+      border-radius: 25px;
+      overflow-x: auto; /* Enable horizontal scrolling for long code */
+    }
+
+    .code-container {
+      background-color: #f0f0f0;
+    }
+
+    .code-container pre {
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px;
+      margin: 0;
+      background-color: #f5f5f5;
+      border-radius: 5px;
+    }
+
+    .output-container {
+      background-color: #e0e0e0;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* Align output at the bottom */
+    }
+
+    .output {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .run-button {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .reset-button {
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container code-container">
+    <pre>
+      <code>
+        #include stdio.h>
+        #include stdlib.h>
+        #define MAX_PROCESSES 10
+            
+            typedef struct {
+                int pid;
+                int arrival_time;
+                int burst_time;
+                int priority;
+            } Process;
+            
+            void priority_scheduling(Process processes[], int n) {
+                int current_time = 0;
+                int i, j;
+            
+                // Sort the processes based on priority (higher priority first)
+                for (i = 0; i < n - 1; i++) {
+                    for (j = i + 1; j < n; j++) {
+                        if (processes[i].priority < processes[j].priority) {
+                            // Swap processes
+                            Process temp = processes[i];
+                            processes[i] = processes[j];
+                            processes[j] = temp;
+                        }
+                    }
+                }
+            
+                printf("Order of execution:\n");
+                for (i = 0; i < n; i++) {
+                    printf("Process %d is running at time %d\n", processes[i].pid, current_time);
+                    current_time += processes[i].burst_time;
+                }
+            }
+            
+            int main() {
+                Process processes[MAX_PROCESSES];
+                int n, i;
+            
+                // Sample input for 3 processes
+                n = 3;
+                processes[0].pid = 1;
+                processes[0].arrival_time = 0;
+                processes[0].burst_time = 5;
+                processes[0].priority = 3;
+            
+                processes[1].pid = 2;
+                processes[1].arrival_time = 1;
+                processes[1].burst_time = 3;
+                processes[1].priority = 1;
+            
+                processes[2].pid = 3;
+                processes[2].arrival_time = 2;
+                processes[2].burst_time = 8;
+                processes[2].priority = 2;
+            
+                priority_scheduling(processes, n);
+            
+                return 0;
+            }
+      </code>
+    </pre>
+  </div>
+
+  <div class="container output-container">
+    <div id="output"></div>  <button class="run-button" id="run-button">Run Simulation</button>
+    <button class="reset-button" id="reset-button" disabled>Reset</button>
+  </div>
+
+  <script>
+    // Replace this with your actual server-side script logic (e.g., AJAX call)
+    function runSimulation() {
+      // Simulate fetching output from server-side script
+      const output = "Order of execution <br> \
+                     Process 1 is running at time 0 <br> \
+                    Process 3 is running at time 5 <br> \
+                    Process 2 is running at time 13"
+
+      // Update the output container
+      document.getElementById("output").innerHTML = output;
+
+      // Enable reset button after running
+      document.getElementById("reset-button").disabled = false;
+    }
+
+    document.getElementById("run-button").addEventListener("click", runSimulation);
+
+    // Reset functionality (optional)
+    document.getElementById("reset-button").addEventListener("click", function() {
+      document.getElementById("output").innerHTML = "";
+      // Additional reset logic (e.g., clear server-side state)
+    });
+  </script>
+</body>
+</html>
